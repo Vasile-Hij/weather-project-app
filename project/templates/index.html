@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 class="title">
+  Weather application with authentication
+</h1>
+<br>
+<h2 class="subtitle">
+  Please <u><a href="{{ url_for('main.login') }}" >log in</a></u> or
+  <u><a href="{{ url_for('main.signup') }}" >sign up</a></u> to see the content of this website!
+</h2>
+{% endblock %}
