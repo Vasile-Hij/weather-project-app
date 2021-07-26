@@ -36,6 +36,6 @@ $ python3
 
 4. Configuration
 `$ python3 ./project/config.py`
-5. Run server`$ python3 start.py`
+5. Run server`$ python3 wsgi.py`
 6. You need to register or log in to website
 7. Check the weather by adding/deleting cities.
