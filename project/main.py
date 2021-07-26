@@ -5,13 +5,13 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from .models import User, UserToCityMapping
 from .__init__ import db
 import requests
-import ConfigParser
+import configparser
 
 main = Blueprint('main', __name__)
 
 
 def readConfig():
-    parser = ConfigParser()
+    parser = configparser()
     parser.read('config.ini')
     return parser
 

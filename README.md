@@ -29,7 +29,7 @@ python3 -m pip install -r requirements.txt
 3. Create database 
 ```
 $ python3
->>> from app import db, create_app
+>>> from project import db, create_app
 >>> db.create_all(app=create_app())
 >>> exit()
 ```
