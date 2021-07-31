@@ -1,38 +1,41 @@
 #!/bin/usr/env python3
 from flask import Blueprint, render_template, redirect, url_for, request, flash
-from flask_login import login_user, logout_user, login_required
+from flask_login import login_user, logout_user, login_required, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from .models import User, UserToCityMapping
 from .__init__ import db
-import requests
 import configparser
+import requests
+import math
 
 main = Blueprint('main', __name__)
 
 
 def readConfig():
-    parser = configparser()
+    parser = configparser.ConfigParser()
     parser.read('config.ini')
     return parser
 
 
 def getApiKey():
-    parser = readConfig()
-    return parser.get("openweathermap","api")
+    api_key = readConfig()
+    return api_key.get("openweathermap", 'api', fallback='No api key was found')
 
 
 def getUnits():
-    parser = readConfig()
-    return parser.get("units", "unit")
+    units = readConfig()
+    return units.get("units", "unit", fallback='No metric unit inserted')
 
 
 def getWeatherData(city):
     api_key = getApiKey()
     units = getUnits()
-    url = 'http://api.openweathermap.org/data/2.5/weather?q={}&units={}&appid={}'\
-        .format(city, units, api_key)
+    url = f"http://api.openweathermap.org/data/2.5/weather?q={city}&units={units}&appid={api_key}"
     data = requests.get(url).json()
     return data
+
+
+is_fahrenheit = False
 
 
 @main.route('/')
@@ -43,22 +46,25 @@ def index():
 @main.route('/profile')
 @login_required
 def profile():
-    weather_data = []
     cities = UserToCityMapping.query.all()
+    weather_data = []
     for city in cities:
-        data = getWeatherData(city.name)
+        data = getWeatherData(city.name_id)
         weather = {
-            'city': city.name,
-            'temperature': data['main']['temp'],
-            'description': data['weather'][0]['description'],
-            'icon': data['weather'][0]['icon'],
-            'pressure': data['main']['pressure'],
-            'humidity': data['main']['humidity'],
-            'country': data['sys']['country']
+                'city': city.name_id,
+                'celsius': math.ceil(data['main']['temp']),
+                'fahrenheit': math.ceil((int(data['main']['temp']) * 9 / 5) + 32),
+                'description': data['weather'][0]['description'],
+                'icon': data['weather'][0]['icon'],
+                'pressure': data['main']['pressure'],
+                'wind_celsius': data['wind']['speed'],
+                'wind_fahrenheit': math.ceil((data['wind']['speed']) * 2.23694),
+                'humidity': data['main']['humidity'],
+                'country': data['sys']['country'],
         }
+        print(weather_data)
         weather_data.append(weather)
-    print(weather_data)
-    return render_template('profile.html', weather_data=weather_data)
+    return render_template('profile.html', weather_data=weather_data, name=current_user.name, is_fahrenheit=is_fahrenheit)
 
 
 @main.route('/profile', methods=['POST'])
@@ -68,11 +74,11 @@ def postCity():
     if not new_city.isnumeric or new_city == '':
         error_message = 'Please enter a city name as: Bucharest'
     if new_city:
-        existing_city = UserToCityMapping.query.filter_by(name=new_city).first()
+        existing_city = UserToCityMapping.query.filter_by(name_id=new_city).first()
         if not existing_city:
             new_city_data = getWeatherData(new_city)
             if new_city_data['cod'] == 200:
-                new_city_obj = UserToCityMapping(name=new_city)
+                new_city_obj = UserToCityMapping(name_id=new_city)
                 db.session.add(new_city_obj)
                 db.session.commit()
             else:
@@ -86,15 +92,22 @@ def postCity():
     return redirect(url_for('main.profile'))
 
 
-@main.route('/delete/<name>')
-def deleteCity(name):
-    city = UserToCityMapping.query.filter_by(name=name).first()
-    try:
-        db.session.delete(city)
-        db.session.commit()
-    except:
-        return 'Failed to delete city. Please try again!'
-    flash(f'Successfully deleted {city.name}', 'success')
+@main.route('/profile/<name_id>', methods=['GET', 'POST'])
+def deleteCity(name_id):
+    city = UserToCityMapping.query.filter_by(name_id=name_id).first()
+    #try:
+    db.session.delete(city)
+    db.session.commit()
+    #except:
+        #return 'Failed to delete city. Please try again!'
+    flash(f'Successfully deleted {city.name_id}', 'success')
+    return redirect(url_for('def profile'))
+
+
+@main.route('/switch_units', methods=['GET'])
+def switch():
+    global is_fahrenheit
+    is_fahrenheit = not is_fahrenheit
     return redirect(url_for('main.profile'))
 
 
@@ -160,5 +173,6 @@ def logout():
 @main.route('/contact')
 def contact():
     return render_template('contact.html')
+
 
 

@@ -1,0 +1,129 @@
+.form-units {
+	margin-top: 7%;
+	padding-left: 10%;
+	padding-right: 10%;
+	text-align: center;
+	font-size: 1vw;
+	margin-bottom: 3%;
+}
+
+#input-city {
+	border: none;
+	outline: none;
+	height: 3vw;
+	width: 40vw;
+	padding-left: 0.5vw;
+	box-shadow: 0 0 1vw rgba(0,0,0,0.5);
+}
+
+.submit-button {
+	margin-left: 1vw;
+	height: 3vw;
+	width: 9vw;
+	border: none;
+	outline: none !important;
+	background-color: #373252;
+	color: white;
+	box-shadow: 0 0 1vw rgba(0,0,0,0.5);
+}
+
+
+.degree-unit {
+	font-size: 1.75vw;
+}
+
+.delete-button {
+	background-color: transparent;
+	width: 1.5vw;
+	height: 1vw;
+	margin: 0;
+	padding: 0;
+	border: none;
+	color: white;
+}
+
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 220px;
+    height: 40px;
+}
+
+.switch input {
+    display:none;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: darkgray;
+    -webkit-transition: 0.6s;
+    transition: 0.6s;
+    border-radius: 20px;
+    box-shadow: 0 0 1vw rgba(0,0,0,0.5);
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 36px;
+    width: 36px;
+    left: 8px;
+    bottom: 2px;
+    background-color: white;
+    -webkit-transition: 0.6s;
+    transition: 0.6s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: darkgray;
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+    -webkit-transform: translateX(65px);
+    -ms-transform: translateX(65px);
+    transform: translateX(155px);
+}
+
+.slider:after {
+    content:'°F';
+    color: white;
+    display: block;
+    position: absolute;
+    transform: translate(-50%,-50%);
+    top: 50%;
+    left: 50%;
+    font-size: 32pt;
+    font-weight: bolder;
+}
+
+input:checked + .slider:after {
+    content:'°C';
+}
+
+::-webkit-scrollbar {
+  width: 0.5vw;
+
+  background:-webkit-linear-gradient(0, blue 50%, white 100%);
+}
+
+::-webkit-scrollbar-track {
+  background:  linear-gradient(0deg, #836273 0%, #373252 100%);
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}

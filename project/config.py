@@ -20,7 +20,7 @@ def createConfig(path):
     config['db'] = {
         'db_name': 'weather_app-with-flask',
         'db_host': 'localhost',
-        'db_port': '5001'
+        'db_port': '5000'
     }
 
     config['files'] = {
@@ -29,7 +29,7 @@ def createConfig(path):
     }
 
     config['openweathermap'] = {
-        'api': '<your_api_key>'
+        'api': '271d1234d3f497eed5b1d80a07b3fcd1'
     }
 
     config['units'] = {
