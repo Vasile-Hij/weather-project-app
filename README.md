@@ -16,6 +16,9 @@ then check the weather for your desired location and measurements in Celsius or 
 
 **Functionality**
 
+Attention: the virtual enviroment is already created for this project either skip on step 3,
+either delete `myprojectenv` directory and follow from step 1 or step 2 depends on your machine.
+
 1.1 Deploy virtual environment Linux.
 ```
 $ sudo apt update
