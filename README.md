@@ -3,7 +3,7 @@ Weather application with user authentication in Flask
 **Quick description:**
  
 This application will display a web page with user authentication by default, 
-then check the weather for your desired location.
+then check the weather for your desired location and measurements in Celsius or Fahrenheit degrees.
 
 **Tools**
 
