@@ -16,10 +16,18 @@ then check the weather for your desired location and measurements in Celsius or 
 
 **Functionality**
 
-Attention: the virtual enviroment is already created for this project either skip on step 3,
-either delete `myprojectenv` directory and follow from step 1 or step 2 depends on your machine.
+Attention: the virtual enviroment is already created for windows if your machine is windows based,
+either delete `myprojectenv` directory and follow from step 1.2. If you want a fresh install on windows, 
+delete the `myprojectenv` directory and follow from step 1.1 and skip 1.2 step.
 
-1.1 Deploy virtual environment Linux.
+1.1 Deploy virtual environment Windows.
+```
+$ py -m venv myprojectenv
+$ .\myprojectenv\Scripts\activate 
+$ easy_install -U pip
+```
+
+1.2 Deploy virtual environment Linux.
 ```
 $ sudo apt update
 $ sudo apt install python3-pip python3-dev build-essential libssl-dev libffi-dev python3-setuptools
@@ -27,12 +35,7 @@ $ sudo apt install python3-venv
 $ python3.7 -m venv myprojectenv
 $ source myprojectenv/bin/activate
 ```
-1.2 Deploy virtual environment Windows.
-```
-$ py -m venv myprojectenv
-$ .\myprojectenv\Scripts\activate 
-$ easy_install -U pip
-```
+
 
 2. Install requirements
 ```
