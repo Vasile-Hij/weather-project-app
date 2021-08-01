@@ -13,7 +13,7 @@ def createConfig(path):
 
     config['settings'] = {
         'debug': 'true',
-        'secrete_key': 'secret',
+        'secrete_key': '<your_secret_key>',
         'log_path': '/project'
     }
 
@@ -29,7 +29,7 @@ def createConfig(path):
     }
 
     config['openweathermap'] = {
-        'api': '271d1234d3f497eed5b1d80a07b3fcd1'
+        'api': '<your_api_key>'
     }
 
     config['units'] = {
