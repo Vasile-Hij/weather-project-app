@@ -62,7 +62,6 @@ def profile():
                 'humidity': data['main']['humidity'],
                 'country': data['sys']['country'],
         }
-        print(weather_data)
         weather_data.append(weather)
     return render_template('profile.html', weather_data=weather_data, name=current_user.name, is_fahrenheit=is_fahrenheit)
 
