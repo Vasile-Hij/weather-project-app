@@ -1,2 +1,2 @@
 #!/bin/sh
-python ../start.py
+python ../wsgi.py
