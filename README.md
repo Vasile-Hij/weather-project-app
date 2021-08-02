@@ -7,7 +7,7 @@ then check the weather for your desired location and measurements in Celsius or 
 
 **Tools**
 
-* Backend: python with API and database
+* Backend: python with API and SQLite database
 * OpenWeatherMap API make the data collection
 * SQLAlchemy stores the data for API queries and users registration
 * Flask used for web application
