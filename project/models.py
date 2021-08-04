@@ -1,22 +1,39 @@
-#!/bin/usr/env python3
+#!/usr/bin/env python3
 from flask_login import UserMixin
 from . import db
+from sqlalchemy import Table, Column, Integer, ForeignKey
+from sqlalchemy.orm import relationship
+from sqlalchemy.ext.declarative import declarative_base
 
 
 class User(db.Model, UserMixin):
+    __tablename__ = "user"
     id = db.Column(db.Integer, primary_key=True, unique=True)
-    name = db.Column(db.String(100))
+    username = db.Column(db.String(100))
     email = db.Column(db.String, unique=True)
     password = db.Column(db.String(100))
     authenticated = db.Column(db.Boolean, default=False)
+    user_city = db.relationship("UserToCityMapping", backref="city_searched", lazy=True, cascade="all, delete", passive_deletes=True)
 
-    def __init__(self, email, name, password):
+    def __init__(self, email, username, password):
         self.email = email
+        self.username = username
         self.password = password
-        self.name = name
+
+    def __repr__(self):
+        return f"User('{self.username}', '{self.email})"
 
 
 class UserToCityMapping(db.Model):
+    __tablename__ = "user_to_city_mapping"
     id = db.Column(db.Integer, primary_key=True)
-    name_id = db.Column(db.String(50), nullable=False)
-    temperature = db.Column(db.Float)
+    city_name = db.Column(db.String(50), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id", ondelete="CASCADE"), nullable=False)
+
+    def __init__(self, city_name, user_id):
+        self.city_name = city_name
+        self.user_id = user_id
+
+
+    def __repr__(self):
+        return f"UserToCityMapping('{self.city_name}', '{self.user_id}')"
