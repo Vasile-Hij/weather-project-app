@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
 from flask import Blueprint, render_template, redirect, url_for, request, flash
-from flask_login import login_user, logout_user, login_required, current_user
-from werkzeug.security import generate_password_hash, check_password_hash
-from .models import User, UserToCityMapping
-from .__init__ import db
+from flask_login import login_required, current_user
+from .models import UserToCityMapping
+from project import db
 import configparser
 import requests
 import math
@@ -35,65 +34,6 @@ def getWeatherData(city):
     return data
 
 
-@main.route('/login', methods=['GET'])
-def login():
-    return render_template('login.html')
-
-
-@main.route('/signup')
-def signup():
-    return render_template('signup.html')
-
-
-@main.route('/login', methods=['POST'])
-def login_post():
-    email = request.form.get('email')
-    password = request.form.get('password')
-    remember = True if request.form.get('remember') else False
-
-    user = User.query.filter_by(email=email).first()
-
-    if not user or not check_password_hash(user.password, password):
-        flash('Please check your login details and try again.')
-        return redirect(url_for('main.login'))
-
-    login_user(user, remember=remember)
-    return redirect(url_for('main.profile'))
-
-
-@main.route('/signup', methods=['POST'])
-def signup_post():
-    email = request.form.get('email')
-    username = request.form.get('username')
-    password = request.form.get('password')
-
-    user = User.query.filter_by(email=email).first()
-
-    if user:
-        flash('Email address already exists!')
-        return redirect(url_for('main.login'))
-
-    new_user = User(email=email, username=username, password=generate_password_hash(password, method='sha256'))
-    try:
-        db.session.add(new_user)
-        db.session.commit()
-    except:
-        return 'Failed to add the { new_user } on database'
-    return redirect(url_for('main.login'))
-
-
-@main.route('/logout')
-@login_required
-def logout():
-    logout_user()
-    return redirect(url_for('main.index'))
-
-
-@main.route('/contact')
-def contact():
-    return render_template('contact.html')
-
-
 is_fahrenheit = False
 
 
@@ -105,7 +45,7 @@ def index():
 @main.route('/profile')
 @login_required
 def profile():
-    cities = UserToCityMapping.query.all()
+    cities = UserToCityMapping.query.filter(UserToCityMapping.user_id == current_user.id).all()
     weather_data = []
     for city in cities:
         data = getWeatherData(city.city_name)
@@ -153,7 +93,7 @@ def postCity():
 
 @main.route('/profile/<city_name>')
 @login_required
-def deleteCity(city_name):
+def deleteCity(city_name=None):
     city = UserToCityMapping.query.filter_by(city_name=city_name).first()
     try:
         db.session.delete(city)
