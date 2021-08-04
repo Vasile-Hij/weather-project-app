@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 from flask_login import UserMixin
-from . import db
-from sqlalchemy import Table, Column, Integer, ForeignKey
-from sqlalchemy.orm import relationship
-from sqlalchemy.ext.declarative import declarative_base
+from project import db, login_manager
+
+
+@login_manager.user_loader
+def load_user(username):
+    return User.query.get(int(username))
 
 
 class User(db.Model, UserMixin):
