@@ -17,8 +17,8 @@ then check the weather for your desired location and measurements in Celsius or 
 **Functionality**
 
 Attention: the virtual enviroment is already created for windows. 
-If you want a fresh install delete `myprojectenv` directory and follow from step 1.1 and skip 1.2. 
-For Linux machine skip step 1.1.
+If you want a fresh install delete `myprojectenv` directory and start from step 1.1 and skip 1.2 if you are on windows. 
+For Linux machine skip step 1.1 and go on 1.2.
 
 1.1 Deploy virtual environment Windows.
 ```

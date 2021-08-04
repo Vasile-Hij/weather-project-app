@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/bin/usr/env python3
 from project import create_app
 
 app = create_app()
