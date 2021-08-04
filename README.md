@@ -1,5 +1,7 @@
 Weather application with user authentication in Flask
 --
+Deployed on server*: https://vasilehij.com
+
 **Quick description:**
  
 This application will display a web page with user authentication by default, 
@@ -66,3 +68,6 @@ $ python3
 6. You need to register or log in to website
 7. Check the weather by switching from Celsius to Fahrenheit temperature and
    adding/deleting cities.
+
+`*` for deployment on server you will need NGINX, gunicor and a SSL certificate.
+Also set `debug=False` in `wsgi.py`.
