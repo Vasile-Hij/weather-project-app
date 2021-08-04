@@ -7,14 +7,14 @@ from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
 
 app = Flask(__name__)
-db = SQLAlchemy()
+db = SQLAlchemy(app)
 
 
 def create_app():
     app.config['DEBUG'] = True
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-    app.config['SECRET_KEY'] = '<secret_key>'
+    app.config['SECRET_KEY'] = 'secret'
 
     db.init_app(app)
 
