@@ -1,22 +1,12 @@
 {% extends "base.html" %}
 {% block content %}
-<head>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.css" />
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-    <section class="hero is-primary">
-        <div class="hero-body">
-            <div class="container">
-                <h1 class="title">
-                    <p style="color:#3A3B3C">
-                    Hey <u>{{ username }}</u>, you can check multiple cities now!
-                    </p>
-                </h1>
-            </div>
-        </div>
-    </section>
-
-        <div class="form-units">
+<section>
+    <div class="container-title">
+        <h1>
+            Hey <u>{{ username }}</u> search cities and use the switcher
+        </h1>
+    </div>
+    <div class="form-units">
         <form action="/switch_units" method="GET">
             <label class="switch">
                 {% if is_fahrenheit %}
@@ -29,11 +19,10 @@
             </label>
         </form>
     </div>
-
-    <section class="section">
+    <div class="section">
         <div class="container">
             <div class="columns">
-                <div class="column is-offset-4 is-4">
+                <div class="column is-offset-3 is-6">
                     <form method="POST">
                         <div class="field has-addons">
                             <div class="control is-expanded">
@@ -61,55 +50,41 @@
                 </div>
             </div>
         </div>
-    </section>
-    <section class="section">
-        <div class="container">
-            <div class="columns">
-                <div class="column is-offset-4 is-4">
-                    {% for weather in weather_data %}
-                    <div class="box" style="background-color:grey">
-                        <article class="media">
-
-                            <div class="media-left">
-                                <figure class="image is-50x50">
-                                    <img src="http://openweathermap.org/img/w/{{ weather.icon }}.png" alt="Image">
-                                </figure>
-                            </div>
-                            <div class="media-content">
-                                <div class="content" style="color:white">
-                                    <p>
-                                        {% if is_fahrenheit %}
-                                        <span class="title" >{{ weather.city }}</span>
-                                        <br>
-                                        <span class="subtitle">{{ weather.fahrenheit }}° F</span>
-                                        <br> Description: {{ weather.description }}
-                                        <br> Pressure: {{ weather.pressure }} mmHg
-                                        <br> Wind: {{ weather.wind_fahrenheit }} mph
-                                        <br> Humidity: {{ weather.humidity }} %
-                                        <br> Country: {{ weather.country }}
-                                        {% else %}
-                                        <span class="title" >{{ weather.city }}</span>
-                                        <br>
-                                        <span class="subtitle">{{ weather.celsius }}° C</span>
-                                        <br> Description: {{ weather.description }}
-                                        <br> Pressure: {{ weather.pressure }} mmHg
-                                        <br> Wind: {{ weather.wind_celsius }} m/s
-                                        <br> Humidity: {{ weather.humidity }} %
-                                        <br> Country: {{ weather.country }}
-                                        {% endif %}
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="media-right">
-                                <a href="{{ url_for('main.deleteCity', city_name=weather.city) }}">
-                                    <button class="delete"></button>
-                                </a>
-                            </div>
-                        </article>
-                    </div>
-                    {% endfor %}
+    </div>
+    <div class="cards">
+        {% for weather in weather_data %}
+        <div class="box">
+            <article class="media">
+                <div class="media-body">
+                    <a href="{{ url_for('main.deleteCity', city_name=weather.city) }}">
+                        <button class="delete"></button>
+                    </a>
+                    <figure class="image is-30x30">
+                        <img src="http://openweathermap.org/img/w/{{ weather.icon }}.png" alt="Image">
+                    </figure>
+                    {% if is_fahrenheit %}
+                    <span class="title" >{{ weather.city }}</span>
+                    <br>
+                    <span class="subtitle">{{ weather.fahrenheit }}° F</span>
+                    <br> Description: {{ weather.description }}
+                    <br> Pressure: {{ weather.pressure }} mmHg
+                    <br> Wind: {{ weather.wind_fahrenheit }} mph
+                    <br> Humidity: {{ weather.humidity }} %
+                    <br> Country: {{ weather.country }}
+                    {% else %}
+                    <span class="title" >{{ weather.city }}</span>
+                    <br>
+                    <span class="subtitle">{{ weather.celsius }}° C</span>
+                    <br> Description: {{ weather.description }}
+                    <br> Pressure: {{ weather.pressure }} mmHg
+                    <br> Wind: {{ weather.wind_celsius }} m/s
+                    <br> Humidity: {{ weather.humidity }} %
+                    <br> Country: {{ weather.country }}
+                    {% endif %}
                 </div>
-            </div>
+            </article>
         </div>
-    </section>
+        {% endfor %}
+    </div>
+</section>
 {% endblock %}
