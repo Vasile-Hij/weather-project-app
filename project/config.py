@@ -13,7 +13,7 @@ def createConfig(path):
 
     config['settings'] = {
         'debug': 'true',
-        'secrete_key': '<secret_key>',
+        'secrete_key': 'secret',
         'log_path': '/project'
     }
 
