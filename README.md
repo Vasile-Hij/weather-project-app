@@ -7,7 +7,7 @@ then check the weather for your desired location and measurements in Celsius or 
 
 **Tools**
 
-* Backend: python with API and SQLite database
+* Backend: python with API and database
 * OpenWeatherMap API make the data collection
 * SQLAlchemy stores the data for API queries and users registration
 * Flask used for web application
@@ -15,6 +15,10 @@ then check the weather for your desired location and measurements in Celsius or 
 
 
 **Functionality**
+
+Attention: the virtual enviroment is already created for windows. 
+If you want a fresh install delete `myprojectenv` directory and start from step 1.1 and skip 1.2 if you are on windows. 
+For Linux machine skip step 1.1 and go on 1.2.
 
 1.1 Deploy virtual environment Windows.
 ```
@@ -27,7 +31,6 @@ $ easy_install -U pip
 ```
 $ sudo apt update
 $ sudo apt install python3-pip python3-dev build-essential libssl-dev libffi-dev python3-setuptools
-$ sudo apt install python3-venv
 $ python3.7 -m venv myprojectenv
 $ source myprojectenv/bin/activate
 ```

@@ -10,13 +10,13 @@
             <div class="container">
                 <h1 class="title">
                     <p style="color:#3A3B3C">
-                    Hey <u>{{name}}</u>, you can check multiple cities now!
+                    Hey <u>{{ username }}</u>, you can check multiple cities now!
                     </p>
                 </h1>
             </div>
         </div>
     </section>
-    <section>
+
         <div class="form-units">
         <form action="/switch_units" method="GET">
             <label class="switch">
@@ -30,7 +30,7 @@
             </label>
         </form>
     </div>
-    </section>
+
     <section class="section">
         <div class="container">
             <div class="columns">
@@ -102,7 +102,7 @@
                                 </div>
                             </div>
                             <div class="media-right">
-                                <a href="{{ url_for('main.deleteCity', name_id=weather.city) }}">
+                                <a href="{{ url_for('main.deleteCity', city_name=weather.city) }}">
                                     <button class="delete"></button>
                                 </a>
                             </div>
