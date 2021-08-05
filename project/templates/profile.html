@@ -1,90 +1,103 @@
 {% extends "base.html" %}
 {% block content %}
-<section>
-    <div class="container-title">
-        <h1>
-            Hey <u>{{ username }}</u> search cities and use the switcher
-        </h1>
-    </div>
-    <div class="form-units">
-        <form action="/switch_units" method="GET">
-            <label class="switch">
-                {% if is_fahrenheit %}
-                <input type="checkbox" name="degrees_unit" onchange="this.form.submit();">
-                <span class="slider round"></span>
-                {% else %}
-                <input type="checkbox" name="degrees_unit" checked onchange="this.form.submit();">
-                <span class="slider round"></span>
-                {% endif %}
-            </label>
-        </form>
-    </div>
-    <div class="section">
-        <div class="container">
-            <div class="columns">
-                <div class="column is-offset-3 is-6">
-                    <form method="POST">
-                        <div class="field has-addons">
-                            <div class="control is-expanded">
-                                <input class="input is-focused" name="city" type="text" placeholder="City Name">
-                            </div>
-                            <div class="control">
-                                <button class="button is-info">
-                                    Add City
-                                </button>
-                            </div>
-                        </div>
-                        {% with messages = get_flashed_messages(with_categories=true) %}
-                        {% if messages %}
-                            {% for category, message in messages %}
-                                {% set message_class = 'is-success' %}
-
-                                {% if category == 'error' %}
-                                    {% set message_class = 'is-danger' %}
-                                {% endif %}
-                                <div class="notification {{ message_class }}">{{ message }}</div>
-                            {% endfor %}
+    <section class="hero">
+        <div class="hero-body">
+            <div class="container-title">
+                <h1>
+                Hey <u>{{ username }}</u> search cities and use the switcher
+                </h1>
+            </div>
+            <div class="form-units">
+                <form action="/switch_units" method="GET">
+                    <label class="switch">
+                        {% if is_fahrenheit %}
+                        <input type="checkbox" name="degrees_unit" onchange="this.form.submit();">
+                        <span class="slider round"></span>
+                        {% else %}
+                        <input type="checkbox" name="degrees_unit" checked onchange="this.form.submit();">
+                        <span class="slider round"></span>
                         {% endif %}
-                        {% endwith %}
-                    </form>
+                    </label>
+                </form>
+            </div>
+            <div class="container">
+                <div class="columns">
+                    <div class="column is-offset-4 is-4">
+                        <form method="POST">
+                            <div class="field has-addons">
+                                <div class="control is-expanded">
+                                    <input class="input is-focused" name="city" type="text" placeholder="City Name">
+                                </div>
+                                <div class="control">
+                                    <button class="button is-info">
+                                        Add City
+                                    </button>
+                                </div>
+                            </div>
+                            {% with messages = get_flashed_messages(with_categories=true) %}
+                            {% if messages %}
+                                {% for category, message in messages %}
+                                    {% set message_class = 'is-success' %}
+
+                                    {% if category == 'error' %}
+                                        {% set message_class = 'is-danger' %}
+                                    {% endif %}
+                                    <div class="notification {{ message_class }}">{{ message }}</div>
+                                {% endfor %}
+                            {% endif %}
+                            {% endwith %}
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="columns">
+                    <div class="column is-offset-4 is-4">
+                        {% for weather in weather_data %}
+                        <div class="box">
+                            <article class="media">
+
+                                <div class="media-left">
+                                    <figure class="image is-50x50">
+                                        <img src="http://openweathermap.org/img/w/{{ weather.icon }}.png" alt="Image">
+                                    </figure>
+                                </div>
+                                <div class="media-content">
+                                    <div class="content">
+                                        <p>
+                                            {% if is_fahrenheit %}
+                                            <span class="title" >{{ weather.city }}</span>
+                                            <br>
+                                            <span class="subtitle">{{ weather.fahrenheit }}° F</span>
+                                            <br> Description: {{ weather.description }}
+                                            <br> Pressure: {{ weather.pressure }} mmHg
+                                            <br> Wind: {{ weather.wind_fahrenheit }} mph
+                                            <br> Humidity: {{ weather.humidity }} %
+                                            <br> Country: {{ weather.country }}
+                                            {% else %}
+                                            <span class="title" >{{ weather.city }}</span>
+                                            <br>
+                                            <span class="subtitle">{{ weather.celsius }}° C</span>
+                                            <br> Description: {{ weather.description }}
+                                            <br> Pressure: {{ weather.pressure }} mmHg
+                                            <br> Wind: {{ weather.wind_celsius }} m/s
+                                            <br> Humidity: {{ weather.humidity }} %
+                                            <br> Country: {{ weather.country }}
+                                            {% endif %}
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="media-right">
+                                    <a href="{{ url_for('main.deleteCity', city_name=weather.city) }}">
+                                        <button class="delete"></button>
+                                    </a>
+                                </div>
+                            </article>
+                        </div>
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="cards">
-        {% for weather in weather_data %}
-        <div class="box">
-            <article class="media">
-                <div class="media-body">
-                    <a href="{{ url_for('main.deleteCity', city_name=weather.city) }}">
-                        <button class="delete"></button>
-                    </a>
-                    <figure class="image is-30x30">
-                        <img src="http://openweathermap.org/img/w/{{ weather.icon }}.png" alt="Image">
-                    </figure>
-                    {% if is_fahrenheit %}
-                    <span class="title" >{{ weather.city }}</span>
-                    <br>
-                    <span class="subtitle">{{ weather.fahrenheit }}° F</span>
-                    <br> Description: {{ weather.description }}
-                    <br> Pressure: {{ weather.pressure }} mmHg
-                    <br> Wind: {{ weather.wind_fahrenheit }} mph
-                    <br> Humidity: {{ weather.humidity }} %
-                    <br> Country: {{ weather.country }}
-                    {% else %}
-                    <span class="title" >{{ weather.city }}</span>
-                    <br>
-                    <span class="subtitle">{{ weather.celsius }}° C</span>
-                    <br> Description: {{ weather.description }}
-                    <br> Pressure: {{ weather.pressure }} mmHg
-                    <br> Wind: {{ weather.wind_celsius }} m/s
-                    <br> Humidity: {{ weather.humidity }} %
-                    <br> Country: {{ weather.country }}
-                    {% endif %}
-                </div>
-            </article>
-        </div>
-        {% endfor %}
-    </div>
-</section>
+    </section>
 {% endblock %}
