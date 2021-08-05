@@ -22,51 +22,55 @@
     <section class="hero">
         <div class="hero-head">
             <div class="header-background">
-                <nav class="navbar">
-                    <div class="container">
-                        <div id="navbarMenuHeroA" class="navbar-menu">
-                            <div class="navbar-start">
-                                <a href="{{ url_for('main.index') }}" class="navbar-item">
-                                    Home
-                                </a>
-                                {% if current_user.is_authenticated %}
-                                <a href="{{ url_for('main.profile') }}" class="navbar-item">
-                                    Profile
-                                </a>
-                                {% endif %}
-                                {% if not current_user.is_authenticated %}
-                                <a href="{{ url_for('auth.signup') }}" class="navbar-item">
-                                    Sign Up
-                                </a>
-                                {% endif %}
-                                <a href="{{ url_for('auth.contact') }}" class="navbar-item">
-                                    Contact
-                                </a>
-                            </div>
-                            <div class="navbar-end">
-                                {% if not current_user.is_authenticated %}
-                                <a href="{{ url_for('auth.login') }}" class="navbar-item">
-                                    Login
-                                </a>
-                                {% endif %}
-                                {% if current_user.is_authenticated %}
-                                <a href="{{ url_for('auth.logout') }}" class="navbar-item">
-                                    Logout
-                                </a>
-                                {% endif %}
-                            </div>
-                        </div>
+                <nav class="navbar" role="navigation" aria-label="main navigation">
+                    <div class="navbar-brand">
+                        <a class="navbar-item" href="https://bulma.io">
+                             <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+                                 <a href="{{ url_for('main.index') }}" class="navbar-item">
+                                     Home
+                                 </a>
+                                 {% if current_user.is_authenticated %}
+                                 <a href="{{ url_for('main.profile') }}" class="navbar-item">
+                                     Profile
+                                 </a>
+                                 {% endif %}
+                                 {% if not current_user.is_authenticated %}
+                                 <a href="{{ url_for('auth.signup') }}" class="navbar-item">
+                                     Sign Up
+                                 </a>
+                                 {% endif %}
+                                 {% if not current_user.is_authenticated %}
+                                 <a href="{{ url_for('auth.login') }}" class="navbar-item">
+                                     Login
+                                 </a>
+                                 {% endif %}
+                                 {% if current_user.is_authenticated %}
+                                 <a href="{{ url_for('auth.logout') }}" class="navbar-item">
+                                     Logout
+                                 </a>
+                                 {% endif %}
+                                 <a href="{{ url_for('auth.contact') }}" class="navbar-item">
+                                     Contact
+                                 </a>
+                             </a>
+                        </a>
                     </div>
                 </nav>
             </div>
         </div>
-        {% block content %}
-        {% endblock %}
-        <div class="section-footer">
-            <div class="w3-xlarge w3-section">
-                <a href="https://github.com/Vasile-Hij"><i class="fa fa-github w3-hover-opacity"></i></a>
-                <a href="https://www.linkedin.com/in/vasile-hij/"><i class="fa fa-medium w3-hover-opacity"></i></a>
-                <a href="https://vasilehij.medium.com"><i class="fa fa-linkedin w3-hover-opacity"></i></a>
+        <div class="container">
+            <div class="container has-text-centered">
+                {% block content %}
+                {% endblock %}
+            </div>
+        </div>
+        <div class="container has-text-centered">
+            <div class="section-footer">
+                <div class="w3-xlarge w3-section">
+                    <a href="https://github.com/Vasile-Hij"><i class="fa fa-github w3-hover-opacity"></i></a>
+                    <a href="https://vasilehij.medium.com"><i class="fa fa-medium w3-hover-opacity"></i></a>
+                    <a href="https://www.linkedin.com/in/vasile-hij"><i class="fa fa-linkedin w3-hover-opacity"></i></a>
+                </div>
             </div>
         </div>
     </section>

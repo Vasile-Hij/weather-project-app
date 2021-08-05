@@ -1,4 +1,4 @@
-html, body {
+html, body, hero is-primary is-fullheight {
     height: 100vh;
     background: rgb(53,33,185);
     background: linear-gradient(153deg, rgba(53,33,185,1) 14%, rgba(124,3,110,1) 95%);
@@ -15,6 +15,8 @@ html, body {
     background: linear-gradient(#e66465, #9198e5);
     color: #F0FFFF
 }
+
+
 
 .cards {
 	display: grid;
@@ -40,7 +42,7 @@ html, body {
 }
 
 .title {
-    font-size: 2vw;
+
     color: #FFFFF0;
     justify-content: center;
 }
@@ -61,17 +63,8 @@ html, body {
     color: #F8F8FF
 }
 
-.h1 {
-    color: white;
-    font-size: 1.9vw;
-}
-
-.h2 {
-    font-size: 1.4vw;
-}
-
-.h3 {
-    font-size: 1.2vw;
+.navbar {
+justify-content: center;
 }
 
 a:hover {
@@ -99,12 +92,8 @@ a:hover {
 }
 
 .section-footer {
-    padding-top: 2%;
-    padding-bottom: 2%;
-    position:fixed;
-    padding-left: 45%;
-    bottom: 2%;
-    width: 100%;
+    flex-grow: 1;
+    justify-content: center;
 }
 
 .form-units {
