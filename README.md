@@ -1,6 +1,6 @@
 Weather application with user authentication in Flask
 --
-Deployed on server*: https://vasilehij.com
+Deployed on server: https://vasilehij.com
 
 **Quick description:**
  
@@ -69,5 +69,5 @@ $ python3
 7. Check the weather by switching from Celsius to Fahrenheit temperature and
    adding/deleting cities.
 
-`*` for deployment on server you will need NGINX, gunicor and a SSL certificate.
+`*` for deployment on server you will need NGINX, gunicorn and a SSL certificate.
 Also set `debug=False` in `wsgi.py`.
