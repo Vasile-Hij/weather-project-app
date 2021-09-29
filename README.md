@@ -1,6 +1,5 @@
 Weather application with user authentication in Flask
 --
-Deployed on server: https://vasilehij.com
 
 **Quick description:**
  
